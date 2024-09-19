@@ -1,50 +1,12 @@
-<div class="tab-content" id="tab-2">
-  <h2>Contenido de Pestaña 2</h2>
-  <p>Este es el contenido de la segunda pestaña.</p>
+{% extends "base.html" %} {% block tab %}
+<a href="{{ url_for('file') }}" class="tab active" data-tab="1">Pestaña 1</a>
+<a href="{{ url_for('home') }}" class="tab" data-tab="2">Pestaña 2</a>
+<a href="{{ url_for('help') }}" class="tab" data-tab="3">Pestaña 3</a>
+{% endblock %}
 
-  <form action="/upload" method="post" enctype="multipart/form-data">
-    <label for="file-upload" class="custom-file-upload">
-      <i class="fa fa-cloud-upload"></i> Subir archivo
-    </label>
-    <input id="file-upload" type="file" name="file" />
-    <button type="submit">Enviar</button>
-  </form>
+{% block content %}
+<div class="tab-content" id="tab-1"></div>
+  <h2>Contenido de Pestaña 1</h2>
+  <p>Este es el contenido de la tercera pestaña.</p>
 </div>
-
-<style>
-  .custom-file-upload {
-    display: inline-block;
-    padding: 6px 12px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: white;
-    border-radius: 4px;
-    font-size: 16px;
-    transition: background-color 0.3s;
-  }
-
-  .custom-file-upload:hover {
-    background-color: #0056b3;
-  }
-
-  input[type="file"] {
-    display: none;
-  }
-
-  button {
-    display: inline-block;
-    padding: 6px 12px;
-    cursor: pointer;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    transition: background-color 0.3s;
-    margin-top: 10px;
-  }
-
-  button:hover {
-    background-color: #218838;
-  }
-</style>
+{% endblock %}

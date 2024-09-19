@@ -55,37 +55,8 @@
   </head>
   <body>
     <div class="tab-container">
-      <div class="tab-header">
-        <div class="tab" data-tab="1">Pestaña 1</div>
-        <div class="tab" data-tab="2">Pestaña 2</div>
-        <div class="tab" data-tab="3">Pestaña 3</div>
-      </div>
-
-      {% include 'layouts/Report.html' %} {% include 'layouts/File.html' %} {%
-      include 'layouts/Process.html' %}
+      <div class="tab-header">{% block tab %}{% endblock %}</div>
+      {% block content %}{% endblock %}
     </div>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const tabs = document.querySelectorAll(".tab");
-        const contents = document.querySelectorAll(".tab-content");
-
-        tabs.forEach((tab) => {
-          tab.addEventListener("click", function () {
-            tabs.forEach((item) => item.classList.remove("active"));
-            contents.forEach((content) => content.classList.remove("active"));
-
-            tab.classList.add("active");
-            document
-              .getElementById("tab-" + tab.getAttribute("data-tab"))
-              .classList.add("active");
-          });
-        });
-
-        // Activar la primera pestaña por defecto
-        tabs[0].classList.add("active");
-        contents[0].classList.add("active");
-      });
-    </script>
   </body>
 </html>
