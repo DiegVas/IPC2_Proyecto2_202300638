@@ -2,61 +2,70 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <title>Cuadro con Pestañas Moderno</title>
-    <style>
-      body {
-        font-family: "Roboto", sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #f4f4f9;
-      }
-
-      .tab-container {
-        width: 500px;
-        background-color: #fff;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
-
-      .tab-header {
-        display: flex;
-        background-color: #007bff;
-        border-radius: 10px 10px 0 0;
-        overflow: hidden;
-      }
-
-      .tab-header div {
-        flex: 1;
-        padding: 15px;
-        text-align: center;
-        cursor: pointer;
-        color: #fff;
-        transition: background-color 0.3s;
-      }
-
-      .tab-header div.active {
-        background-color: #0056b3;
-      }
-
-      .tab-content {
-        padding: 20px;
-        display: none;
-      }
-
-      .tab-content.active {
-        display: block;
-      }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulador de Ensamblaje - Digital Intelligence, S.A.</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Main.css')}}" />
   </head>
   <body>
-    <div class="tab-container">
-      <div class="tab-header">{% block tab %}{% endblock %}</div>
-      {% block content %}{% endblock %}
+    <div class="container">
+      <header>
+        <h1>Simulador de Ensamblaje</h1>
+        <p>Digital Intelligence, S.A.</p>
+      </header>
+
+      <!-- ? Secciones de principales  -->
+
+      <div class="grid">
+        <div class="section">
+          <h2>Gestión de Datos</h2>
+          <form method="post" action="/new_data" enctype="multipart/form-data">
+            <button class="btn btn-green" type="submit"><i class="fas fa-sync-alt"></i> Inicializar Datos</button>
+            <label for="file-upload" class="btn">
+              <i class="fas fa-file-upload"></i> Cargar Archivo de Configuración
+            </label>
+            <input type="file" id="file-upload" name="file" accept=".xml" style="display: none" />
+          </form>
+
+          <div class="">
+            <h2>Simulación</h2>
+            <form>
+              <label for="machine">Seleccionar Máquina</label>
+              <select id="machine" name="machine">
+                <option value="">-- Seleccione una máquina --</option>
+              </select>
+
+              <label for="product">Seleccionar Producto</label>
+              <select id="product" name="product">
+                <option value="">-- Seleccione un producto --</option>
+              </select>
+
+              <button type="submit" class="btn btn-orange"><i class="fas fa-play"></i> Simular Construcción</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>Tabla de instrucciones</h2>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Diseños</h2>
+        <button class="btn"><i class="fas fa-sitemap"></i> Generar Diagrama de Clases</button>
+        <button class="btn"><i class="fas fa-code-branch"></i> Generar Diagrama de Actividades</button>
+      </div>
+
+      <div class="section">
+        <h2>Reportes y Análisis</h2>
+        <button class="btn"><i class="fas fa-file-alt"></i> Generar Reporte HTML</button>
+        <button class="btn"><i class="fas fa-project-diagram"></i> Generar Gráfica de TDAs</button>
+        <button class="btn btn-red"><i class="fas fa-file-export"></i> Generar Archivo de Salida</button>
+      </div>
+
+      <footer>
+        <a href="#"><i class="fas fa-info-circle"></i> Acerca de la Aplicación</a> |
+        <a href="#"><i class="fas fa-book"></i> Documentación</a>
+      </footer>
     </div>
   </body>
 </html>
