@@ -3,6 +3,7 @@ class Node:
         self.Machine = Machine
         self.next = None
 
+
 class CircularLinkedList:
     def __init__(self):
         self.head = None
@@ -64,8 +65,18 @@ class CircularLinkedList:
             return
         current = self.head
         while True:
-            print(current.data, end=" -> ")
+            print(current.Machine, end=" -> ")
             current = current.next
             if current == self.head:
                 break
         print(" (vuelta al inicio)")
+
+    def __iter__(self):
+        if self.is_empty():
+            return
+        current = self.head
+        while True:
+            yield current.Machine
+            current = current.next
+            if current == self.head:
+                break

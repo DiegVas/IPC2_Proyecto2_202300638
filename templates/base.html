@@ -28,18 +28,27 @@
 
           <div class="">
             <h2>Simulación</h2>
-            <form>
+            <form method="post" action="/update">
               <label for="machine">Seleccionar Máquina</label>
               <select id="machine" name="machine">
                 <option value="">-- Seleccione una máquina --</option>
+                {% for machine in data %}
+                <option value="{{ machine.nombre }}">{{ machine.nombre }}</option>
+                {% endfor %}
               </select>
-
+              {% if Machine_Selected %}
               <label for="product">Seleccionar Producto</label>
               <select id="product" name="product">
                 <option value="">-- Seleccione un producto --</option>
+                {% for products in Machine_Selected.productos %}
+                <option value="{{ products.nombre }}">{{ products.nombre }}</option>
+                {% endfor %}
               </select>
 
               <button type="submit" class="btn btn-orange"><i class="fas fa-play"></i> Simular Construcción</button>
+              {% else %}
+              <button type="submit" class="btn btn-orange"><i class="fas fa-play"></i> Buscar productos</button>
+              {% endif %}
             </form>
           </div>
         </div>

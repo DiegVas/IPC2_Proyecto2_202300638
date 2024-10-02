@@ -3,10 +3,12 @@ class Producto:
         self.nombre = nombre
         self.secuencia_ensamblaje = secuencia_ensamblaje
 
+
 class NodoProducto:
     def __init__(self, producto):
         self.producto = producto
         self.siguiente = None
+
 
 class ListaCircularProductos:
     def __init__(self):
@@ -59,6 +61,16 @@ class ListaCircularProductos:
             print(f"Producto: {actual.producto.nombre}")
             print(f"Secuencia de ensamblaje: {actual.producto.secuencia_ensamblaje}")
             print("---------")
+            actual = actual.siguiente
+            if actual == self.cabeza:
+                break
+
+    def __iter__(self):
+        if self.esta_vacia():
+            return
+        actual = self.cabeza
+        while True:
+            yield actual.producto
             actual = actual.siguiente
             if actual == self.cabeza:
                 break
