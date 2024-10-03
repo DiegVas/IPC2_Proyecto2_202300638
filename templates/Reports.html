@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+<!--! Tab -->
+
+{% block tab %}
+<li><a href="{{ url_for('index') }}">Gestión de Datos</a></li>
+<li><a href="{{ url_for('Simulation') }}">Simulación</a></li>
+<li><a href="{{ url_for('Reports') }}" class="active">Reportes</a></li>
+{% endblock %} {% block container %}
+<section id="Reports" class="tab-content active">
+  <h2>Reportes</h2>
+</section>
+{% endblock %}

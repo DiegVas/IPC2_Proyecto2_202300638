@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+<!--! Tab -->
+
+{% block tab %}
+<li><a href="{{ url_for('index') }}" class="active">Gestión de Datos</a></li>
+<li><a href="{{ url_for('Simulation') }}">Simulación</a></li>
+<li><a href="{{ url_for('Reports') }}">Reportes</a></li>
+{% endblock %} {% block container %}
+<section id="Data_Gestion" class="tab-content active">
+  <h1>Maquina Seleccionada: {{ Machine_Selected.nombre }}</h1>
+  <h1>Producto Seleccionado: {{ Product_Selected.nombre }}</h1>
+
+  <h2>Cargar datos</h2>
+  <!-- !  -->
+  <div class="simulation-controls">
+    <form method="post" action="/new_data" enctype="multipart/form-data">
+      <button class="btn" type="submit">Inicializar Datos</button>
+      <label for="file-upload" class="btn"> Cargar Archivo de Configuración </label>
+      <input type="file" id="file-upload" name="file" accept=".xml" style="display: none" />
+    </form>
+
+    <!-- ! Combo Box para seleccioanr las maquinas -->
+    <div class="form-group">
+      <h2>Simulación</h2>
+      <form method="post" action="/updateMachine">
+        <label for="machine">Seleccionar Máquina</label>
+        <select id="machine" name="machine">
+          <option value="">-- Seleccione una máquina --</option>
+          {% for machine in data %}
+          <option value="{{ machine.nombre }}">{{ machine.nombre }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-orange">Buscar productos</button>
+      </form>
+      <form method="post" action="/updateProduct">
+        {% if Machine_Selected %}
+        <label for="product">Seleccionar Producto</label>
+        <select id="product" name="product">
+          <option value="">-- Seleccione un producto --</option>
+          {% for products in Machine_Selected.productos %}
+          <option value="{{ products.nombre }}">{{ products.nombre }}</option>
+          {% endfor %}
+        </select>
+
+        <button type="submit" class="btn btn-orange">Simular Construcción</button>
+        {% else %} {% endif %}
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

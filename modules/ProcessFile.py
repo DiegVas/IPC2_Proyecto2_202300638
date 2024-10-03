@@ -1,6 +1,12 @@
 import xml.etree.ElementTree as ET
 from classes.Machine import Machine
-import re
+from classes.LinkedLists import (
+    StepLinkedList,
+    LinkedList,
+    ActionLinkedList,
+    TimeLinkedList,
+    ProductLinkedList,
+)
 
 
 # Función para leer el archivo XML
@@ -45,11 +51,15 @@ def simulate_assembly(machine, product):
     assembly_steps = extract_assembly_steps(product.secuencia_ensamblaje)
     total_time = 0
     current_positions = LinkedList()
+
     for _ in range(machine.num_lineas_produccion):
         current_positions.append(-1)
     next_assembly_index = 0
 
+    timeLinked = TimeLinkedList()
+
     def print_table_row(time, actions):
+        actionLinked = ActionLinkedList()
         if time == "":
             print("Tiempo".ljust(10), end="|")
             for i in range(machine.num_lineas_produccion):
@@ -60,6 +70,8 @@ def simulate_assembly(machine, product):
         print(f"{time:<10}|", end="")
         for action in actions:
             print(f"{action:<30}|", end="")
+            actionLinked.append(action)
+        timeLinked.append(time, actionLinked)
         print()
 
     print_table_row(
@@ -67,6 +79,7 @@ def simulate_assembly(machine, product):
     )
 
     while next_assembly_index < assembly_steps.length():
+
         total_time += 1
         actions = LinkedList()
         for _ in range(machine.num_lineas_produccion):
@@ -77,6 +90,7 @@ def simulate_assembly(machine, product):
         next_component = next_step.component - 1  # Acceder al atributo 'component'
 
         for line in range(machine.num_lineas_produccion):
+
             current_position = current_positions.get(line)
 
             if line == next_line:
@@ -94,12 +108,15 @@ def simulate_assembly(machine, product):
                         line,
                         f"Mover brazo {direction} C{current_positions.get(line) + 1}",
                     )
+
                 elif current_position == next_component:
                     actions.set(line, f"Ensamblar C{next_component + 1}")
+
                     total_time += (
                         machine.tiempo_ensamblaje - 1
                     )  # -1 porque ya contamos 1 segundo en este ciclo
                     next_assembly_index += 1
+
             else:
                 # Buscar el próximo paso para esta línea
                 next_step_for_line = next(
@@ -130,107 +147,14 @@ def simulate_assembly(machine, product):
                             f"Mover brazo {direction} C{current_positions.get(line) + 1}",
                         )
 
-        # Convierte la lista enlazada actions a una lista regular para imprimir
-        action_list = []
-        current_node = actions.head
-        while current_node:
-            action_list.append(current_node.data)
-            current_node = current_node.next
-
-        print_table_row(total_time, action_list)
+        print_table_row(total_time, actions)
 
     print(
         f"\nEl producto {product.nombre} se puede elaborar óptimamente en {total_time} segundos."
     )
-
-
-class Node:
-    def __init__(self, data):
-        self.data = data
-        self.next = None
-
-
-class StepNode:
-    def __init__(self, line, component):
-        self.line = line  # Línea del paso
-        self.component = component  # Componente del paso
-        self.next = None  # Apuntador al siguiente nodo
-
-
-class LinkedList:
-    def __init__(self):
-        self.head = None
-
-    def append(self, data):
-        new_node = Node(data)
-        if not self.head:
-            self.head = new_node
-        else:
-            current = self.head
-            while current.next:
-                current = current.next
-            current.next = new_node
-
-    def get(self, index):
-        current = self.head
-        count = 0
-        while current:
-            if count == index:
-                return current.data
-            count += 1
-            current = current.next
-        return None
-
-    def set(self, index, data):
-        current = self.head
-        count = 0
-        while current:
-            if count == index:
-                current.data = data
-                return
-            count += 1
-            current = current.next
-
-    def length(self):
-        count = 0
-        current = self.head
-        while current:
-            count += 1
-            current = current.next
-        return count
-
-
-class StepLinkedList:
-    def __init__(self):
-        self.head = None
-
-    def append(self, line, component):
-        new_node = StepNode(line, component)
-        if not self.head:
-            self.head = new_node
-        else:
-            current = self.head
-            while current.next:
-                current = current.next
-            current.next = new_node
-
-    def get(self, index):
-        current = self.head
-        count = 0
-        while current:
-            if count == index:
-                return current  # Devuelve el nodo completo, no solo los datos
-            count += 1
-            current = current.next
-        return None
-
-    def length(self):
-        count = 0
-        current = self.head
-        while current:
-            count += 1
-            current = current.next
-        return count
+    ProductLinked = ProductLinkedList()
+    ProductLinked.append(product.nombre, total_time, timeLinked)
+    return ProductLinked
 
 
 def extract_assembly_steps(secuencia_ensamblaje):

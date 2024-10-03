@@ -3,77 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simulador de Ensamblaje - Digital Intelligence, S.A.</title>
+    <title>Simulador de Ensamblaje</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/Main.css')}}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Table.css')}}" />
   </head>
   <body>
     <div class="container">
       <header>
         <h1>Simulador de Ensamblaje</h1>
-        <p>Digital Intelligence, S.A.</p>
+        <nav>
+          <ul class="tabs">
+            {% block tab %}{% endblock %}
+          </ul>
+        </nav>
       </header>
 
-      <!-- ? Secciones de principales  -->
-
-      <div class="grid">
-        <div class="section">
-          <h2>Gestión de Datos</h2>
-          <form method="post" action="/new_data" enctype="multipart/form-data">
-            <button class="btn btn-green" type="submit"><i class="fas fa-sync-alt"></i> Inicializar Datos</button>
-            <label for="file-upload" class="btn">
-              <i class="fas fa-file-upload"></i> Cargar Archivo de Configuración
-            </label>
-            <input type="file" id="file-upload" name="file" accept=".xml" style="display: none" />
-          </form>
-
-          <div class="">
-            <h2>Simulación</h2>
-            <form method="post" action="/update">
-              <label for="machine">Seleccionar Máquina</label>
-              <select id="machine" name="machine">
-                <option value="">-- Seleccione una máquina --</option>
-                {% for machine in data %}
-                <option value="{{ machine.nombre }}">{{ machine.nombre }}</option>
-                {% endfor %}
-              </select>
-              {% if Machine_Selected %}
-              <label for="product">Seleccionar Producto</label>
-              <select id="product" name="product">
-                <option value="">-- Seleccione un producto --</option>
-                {% for products in Machine_Selected.productos %}
-                <option value="{{ products.nombre }}">{{ products.nombre }}</option>
-                {% endfor %}
-              </select>
-
-              <button type="submit" class="btn btn-orange"><i class="fas fa-play"></i> Simular Construcción</button>
-              {% else %}
-              <button type="submit" class="btn btn-orange"><i class="fas fa-play"></i> Buscar productos</button>
-              {% endif %}
-            </form>
-          </div>
-        </div>
-
-        <div class="section">
-          <h2>Tabla de instrucciones</h2>
-        </div>
-      </div>
-
-      <div class="section">
-        <h2>Diseños</h2>
-        <button class="btn"><i class="fas fa-sitemap"></i> Generar Diagrama de Clases</button>
-        <button class="btn"><i class="fas fa-code-branch"></i> Generar Diagrama de Actividades</button>
-      </div>
-
-      <div class="section">
-        <h2>Reportes y Análisis</h2>
-        <button class="btn"><i class="fas fa-file-alt"></i> Generar Reporte HTML</button>
-        <button class="btn"><i class="fas fa-project-diagram"></i> Generar Gráfica de TDAs</button>
-        <button class="btn btn-red"><i class="fas fa-file-export"></i> Generar Archivo de Salida</button>
-      </div>
+      <main>{% block container%}{% endblock %}</main>
 
       <footer>
-        <a href="#"><i class="fas fa-info-circle"></i> Acerca de la Aplicación</a> |
-        <a href="#"><i class="fas fa-book"></i> Documentación</a>
+        <a href="#about">Acerca de la Aplicación</a> |
+        <a href="#docs">Documentación</a>
       </footer>
     </div>
   </body>
