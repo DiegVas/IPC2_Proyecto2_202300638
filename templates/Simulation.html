@@ -13,8 +13,10 @@
       <thead>
         <tr>
           <th>Tiempo</th>
-          <th>Línea de ensamblaje 1</th>
-          <th>Línea de ensamblaje 2</th>
+          {% for linesEnsamble in range(Machine_Selected.num_lineas_produccion) %}
+          <th>Línea de ensamblaje {{ linesEnsamble + 1 }}</th>
+          {% endfor %}
+
         </tr>
       </thead>
       <tbody>
@@ -29,8 +31,9 @@
         {% endfor %}
       </tbody>
     </table>
-    <p class="caption">El producto SmartWatch se puede elaborar óptimamente en 7 segundos.</p>
-    <p class="figure">Figura No. 2 – Tabla de resultados para construir un SmartWatch</p>
+    {% for action in actionsAssembly %}
+    <p class="caption">El producto {{ action.name }} se puede elaborar óptimamente en {{ action.total_time }} segundos.</p>
+    {% endfor %}
   </div>
 </section>
 {% endblock %}
