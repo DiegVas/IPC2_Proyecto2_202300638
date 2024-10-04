@@ -1,0 +1,13 @@
+// Estado de la Cola de Ensamblaje
+digraph {
+	rankdir=LR
+	L1C3 [label=L1C3]
+	L3C5 [label=L3C5]
+	L1C3 -> L3C5
+	L2C6 [label=L2C6]
+	L3C5 -> L2C6
+	L1C7 [label=L1C7]
+	L2C6 -> L1C7
+	L1C8 [label=L1C8]
+	L1C7 -> L1C8
+}

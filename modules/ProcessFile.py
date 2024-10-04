@@ -78,6 +78,9 @@ def simulate_assembly(machine, product):
         "", ["Tiempo"] + [f"Línea {i+1}" for i in range(machine.num_lineas_produccion)]
     )
 
+    aseembly_in_progress = [False] * machine.num_lineas_produccion
+    aseembly_time_left = [machine.tiempo_ensamblaje] * machine.num_lineas_produccion
+
     while next_assembly_index < assembly_steps.length():
 
         total_time += 1
@@ -110,12 +113,28 @@ def simulate_assembly(machine, product):
                     )
 
                 elif current_position == next_component:
-                    actions.set(line, f"Ensamblar C{next_component + 1}")
+                    if not aseembly_in_progress[line]:
+                        aseembly_in_progress[line] = True
+                        aseembly_time_left[line] = machine.tiempo_ensamblaje
+                        actions.set(line, f"Ensamblar C{next_component + 1}")
 
-                    total_time += (
-                        machine.tiempo_ensamblaje - 1
-                    )  # -1 porque ya contamos 1 segundo en este ciclo
-                    next_assembly_index += 1
+                        # total_time += (
+                        #    machine.tiempo_ensamblaje - 1
+                        # )  # -1 porque ya contamos 1 segundo en este ciclo
+
+                    else:
+                        aseembly_time_left[line] -= 1
+                        if aseembly_time_left[line] == 0:
+                            aseembly_in_progress[line] = False
+                        actions.set(line, f"Ensamblando C{next_component + 1}")
+
+                        next_assembly_index += 1
+
+                    # total_time += 1
+                    # total_time += (
+                    #    machine.tiempo_ensamblaje - 1
+                    # )  # -1 porque ya contamos 1 segundo en este ciclo
+                    # next_assembly_index += 1
 
             else:
                 # Buscar el próximo paso para esta línea
