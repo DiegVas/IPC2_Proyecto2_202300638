@@ -25,8 +25,9 @@ class TimeNode:
 
 
 class ProductNode:
-    def __init__(self, name, total_time, secondsActions):
+    def __init__(self, name, total_time, secondsActions, lineas_produccion):
         self.name = name  # Nombre del producto
+        self.lineas_produccion = lineas_produccion  # Líneas de producción
         self.total_time = total_time  # Tiempo total para ensamblar
         self.next = None  # Apuntador al siguiente nodo
         self.secondsActions = secondsActions  # Lista enlazada de segundos y acciones

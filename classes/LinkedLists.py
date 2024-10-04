@@ -82,6 +82,12 @@ class StepLinkedList:
             current = current.next
         return count
 
+    def __iter__(self):
+        current = self.head
+        while current:
+            yield current
+            current = current.next
+
 
 class ActionLinkedList:
     def __init__(self):
@@ -140,8 +146,8 @@ class ProductLinkedList:
     def __init__(self):
         self.head = None
 
-    def append(self, name, total_time, secondsActions):
-        new_node = ProductNode(name, total_time, secondsActions)
+    def append(self, name, total_time, secondsActions, lineas_produccion):
+        new_node = ProductNode(name, total_time, secondsActions, lineas_produccion)
         if not self.head:
             self.head = new_node
         else:

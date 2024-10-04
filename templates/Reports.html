@@ -8,5 +8,27 @@
 {% endblock %} {% block container %}
 <section id="Reports" class="tab-content active">
   <h2>Reportes</h2>
+  {% for table in ReportLinkedList %}
+
+  <h2>{{table.name}} || {{table.total_time}} segundos</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Tiempo</th>
+        {% for linesEnsamble in range(table.lineas_produccion) %}
+        <th>Línea de ensamblaje {{ linesEnsamble + 1 }}</th>
+        {% endfor %}
+
+      </tr>
+    {% for time in table.secondsActions %}
+    <tr>
+      <td>{{time.second}}</td>
+      {% for actionTime in time.actions %}
+      <td>{{actionTime}}</td>
+
+      {% endfor %} {% endfor %}
+    </tr>
+  </table>
+  {% endfor %}
 </section>
 {% endblock %}

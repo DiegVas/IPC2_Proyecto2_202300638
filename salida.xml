@@ -5,7 +5,7 @@
     <ListadoProductos>
       <Producto>
         <Nombre>SmartWatch</Nombre>
-        <TiempoTotal>7</TiempoTotal>
+        <TiempoTotal>11</TiempoTotal>
         <ElaboracionOptima>
           <Tiempo NoSegundo="1">
             <LineaEnsamblaje NoLinea="1">Mover brazo → C1</LineaEnsamblaje>
@@ -17,27 +17,27 @@
             <LineaEnsamblaje NoLinea="2">No hacer nada</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="3">No hacer nada</LineaEnsamblaje>
           </Tiempo>
-          <Tiempo NoSegundo="3">
+          <Tiempo NoSegundo="4">
             <LineaEnsamblaje NoLinea="1">Ensamblar C2</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="2">No hacer nada</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="3">No hacer nada</LineaEnsamblaje>
           </Tiempo>
-          <Tiempo NoSegundo="4">
+          <Tiempo NoSegundo="6">
             <LineaEnsamblaje NoLinea="1">Mover brazo → C3</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="2">Ensamblar C1</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="3">No hacer nada</LineaEnsamblaje>
           </Tiempo>
-          <Tiempo NoSegundo="5">
+          <Tiempo NoSegundo="7">
             <LineaEnsamblaje NoLinea="1">Mover brazo → C4</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="2">Mover brazo → C2</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="3">No hacer nada</LineaEnsamblaje>
           </Tiempo>
-          <Tiempo NoSegundo="6">
+          <Tiempo NoSegundo="9">
             <LineaEnsamblaje NoLinea="1">No hacer nada</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="2">Ensamblar C2</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="3">No hacer nada</LineaEnsamblaje>
           </Tiempo>
-          <Tiempo NoSegundo="7">
+          <Tiempo NoSegundo="11">
             <LineaEnsamblaje NoLinea="1">Ensamblar C4</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="2">No hacer nada</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="3">No hacer nada</LineaEnsamblaje>
@@ -45,8 +45,44 @@
         </ElaboracionOptima>
       </Producto>
       <Producto>
-        <Nombre>Tablet</Nombre>
-        <TiempoTotal>6</TiempoTotal>
+        <Nombre>SmartTV</Nombre>
+        <TiempoTotal>9</TiempoTotal>
+        <ElaboracionOptima>
+          <Tiempo NoSegundo="1">
+            <LineaEnsamblaje NoLinea="1">Mover brazo → C1</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="2">Mover brazo → C1</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="3">No hacer nada</LineaEnsamblaje>
+          </Tiempo>
+          <Tiempo NoSegundo="2">
+            <LineaEnsamblaje NoLinea="1">Mover brazo → C2</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="2">Mover brazo → C2</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="3">No hacer nada</LineaEnsamblaje>
+          </Tiempo>
+          <Tiempo NoSegundo="3">
+            <LineaEnsamblaje NoLinea="1">Mover brazo → C3</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="2">No hacer nada</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="3">No hacer nada</LineaEnsamblaje>
+          </Tiempo>
+          <Tiempo NoSegundo="5">
+            <LineaEnsamblaje NoLinea="1">Ensamblar C3</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="2">No hacer nada</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="3">No hacer nada</LineaEnsamblaje>
+          </Tiempo>
+          <Tiempo NoSegundo="7">
+            <LineaEnsamblaje NoLinea="1">Mover brazo → C4</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="2">Ensamblar C2</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="3">No hacer nada</LineaEnsamblaje>
+          </Tiempo>
+          <Tiempo NoSegundo="9">
+            <LineaEnsamblaje NoLinea="1">Ensamblar C4</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="2">No hacer nada</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="3">No hacer nada</LineaEnsamblaje>
+          </Tiempo>
+        </ElaboracionOptima>
+      </Producto>
+      <Producto>
+        <Nombre>Audifonos Bluetooth</Nombre>
+        <TiempoTotal>18</TiempoTotal>
         <ElaboracionOptima>
           <Tiempo NoSegundo="1">
             <LineaEnsamblaje NoLinea="1">Mover brazo → C1</LineaEnsamblaje>
@@ -54,26 +90,92 @@
             <LineaEnsamblaje NoLinea="3">Mover brazo → C1</LineaEnsamblaje>
           </Tiempo>
           <Tiempo NoSegundo="2">
-            <LineaEnsamblaje NoLinea="1">Ensamblar C1</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="1">Mover brazo → C2</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="2">Mover brazo → C2</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="3">Mover brazo → C2</LineaEnsamblaje>
           </Tiempo>
           <Tiempo NoSegundo="3">
             <LineaEnsamblaje NoLinea="1">No hacer nada</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="2">Mover brazo → C3</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="3">No hacer nada</LineaEnsamblaje>
+          </Tiempo>
+          <Tiempo NoSegundo="5">
+            <LineaEnsamblaje NoLinea="1">No hacer nada</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="2">Ensamblar C3</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="3">No hacer nada</LineaEnsamblaje>
+          </Tiempo>
+          <Tiempo NoSegundo="7">
+            <LineaEnsamblaje NoLinea="1">No hacer nada</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="2">Mover brazo → C4</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="3">Ensamblar C2</LineaEnsamblaje>
           </Tiempo>
-          <Tiempo NoSegundo="4">
+          <Tiempo NoSegundo="9">
+            <LineaEnsamblaje NoLinea="1">Ensamblar C2</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="2">Mover brazo → C5</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="3">Mover brazo → C3</LineaEnsamblaje>
+          </Tiempo>
+          <Tiempo NoSegundo="10">
+            <LineaEnsamblaje NoLinea="1">Mover brazo → C3</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="2">Mover brazo → C6</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="3">Mover brazo → C4</LineaEnsamblaje>
+          </Tiempo>
+          <Tiempo NoSegundo="11">
+            <LineaEnsamblaje NoLinea="1">Mover brazo → C4</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="2">Mover brazo → C7</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="3">Mover brazo → C5</LineaEnsamblaje>
+          </Tiempo>
+          <Tiempo NoSegundo="13">
+            <LineaEnsamblaje NoLinea="1">Ensamblar C4</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="2">No hacer nada</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="3">Mover brazo → C6</LineaEnsamblaje>
+          </Tiempo>
+          <Tiempo NoSegundo="15">
+            <LineaEnsamblaje NoLinea="1">No hacer nada</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="2">Ensamblar C7</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="3">Mover brazo → C7</LineaEnsamblaje>
+          </Tiempo>
+          <Tiempo NoSegundo="16">
+            <LineaEnsamblaje NoLinea="1">No hacer nada</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="2">No hacer nada</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="3">Mover brazo → C8</LineaEnsamblaje>
+          </Tiempo>
+          <Tiempo NoSegundo="18">
+            <LineaEnsamblaje NoLinea="1">No hacer nada</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="2">No hacer nada</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="3">Ensamblar C8</LineaEnsamblaje>
+          </Tiempo>
+        </ElaboracionOptima>
+      </Producto>
+      <Producto>
+        <Nombre>Tablet</Nombre>
+        <TiempoTotal>10</TiempoTotal>
+        <ElaboracionOptima>
+          <Tiempo NoSegundo="1">
+            <LineaEnsamblaje NoLinea="1">Mover brazo → C1</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="2">Mover brazo → C1</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="3">Mover brazo → C1</LineaEnsamblaje>
+          </Tiempo>
+          <Tiempo NoSegundo="3">
+            <LineaEnsamblaje NoLinea="1">Ensamblar C1</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="2">Mover brazo → C2</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="3">Mover brazo → C2</LineaEnsamblaje>
+          </Tiempo>
+          <Tiempo NoSegundo="5">
+            <LineaEnsamblaje NoLinea="1">No hacer nada</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="2">Mover brazo → C3</LineaEnsamblaje>
+            <LineaEnsamblaje NoLinea="3">Ensamblar C2</LineaEnsamblaje>
+          </Tiempo>
+          <Tiempo NoSegundo="7">
             <LineaEnsamblaje NoLinea="1">No hacer nada</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="2">Ensamblar C3</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="3">Mover brazo → C3</LineaEnsamblaje>
           </Tiempo>
-          <Tiempo NoSegundo="5">
+          <Tiempo NoSegundo="8">
             <LineaEnsamblaje NoLinea="1">No hacer nada</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="2">No hacer nada</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="3">Mover brazo → C4</LineaEnsamblaje>
           </Tiempo>
-          <Tiempo NoSegundo="6">
+          <Tiempo NoSegundo="10">
             <LineaEnsamblaje NoLinea="1">No hacer nada</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="2">No hacer nada</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="3">Ensamblar C4</LineaEnsamblaje>
@@ -82,39 +184,39 @@
       </Producto>
       <Producto>
         <Nombre>SmartPhone</Nombre>
-        <TiempoTotal>7</TiempoTotal>
+        <TiempoTotal>11</TiempoTotal>
         <ElaboracionOptima>
           <Tiempo NoSegundo="1">
             <LineaEnsamblaje NoLinea="1">Mover brazo → C1</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="2">Mover brazo → C1</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="3">Mover brazo → C1</LineaEnsamblaje>
           </Tiempo>
-          <Tiempo NoSegundo="2">
+          <Tiempo NoSegundo="3">
             <LineaEnsamblaje NoLinea="1">Mover brazo → C2</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="2">Mover brazo → C2</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="3">Ensamblar C1</LineaEnsamblaje>
           </Tiempo>
-          <Tiempo NoSegundo="3">
+          <Tiempo NoSegundo="5">
             <LineaEnsamblaje NoLinea="1">Mover brazo → C3</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="2">Ensamblar C2</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="3">Mover brazo → C2</LineaEnsamblaje>
           </Tiempo>
-          <Tiempo NoSegundo="4">
+          <Tiempo NoSegundo="7">
             <LineaEnsamblaje NoLinea="1">Ensamblar C3</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="2">No hacer nada</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="3">Mover brazo → C3</LineaEnsamblaje>
           </Tiempo>
-          <Tiempo NoSegundo="5">
+          <Tiempo NoSegundo="8">
             <LineaEnsamblaje NoLinea="1">No hacer nada</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="2">No hacer nada</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="3">Mover brazo → C4</LineaEnsamblaje>
           </Tiempo>
-          <Tiempo NoSegundo="6">
+          <Tiempo NoSegundo="9">
             <LineaEnsamblaje NoLinea="1">No hacer nada</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="2">No hacer nada</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="3">Mover brazo → C5</LineaEnsamblaje>
           </Tiempo>
-          <Tiempo NoSegundo="7">
+          <Tiempo NoSegundo="11">
             <LineaEnsamblaje NoLinea="1">No hacer nada</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="2">No hacer nada</LineaEnsamblaje>
             <LineaEnsamblaje NoLinea="3">Ensamblar C5</LineaEnsamblaje>

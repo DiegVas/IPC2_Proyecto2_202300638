@@ -1,63 +1,76 @@
-from graphviz import Digraph
+import graphviz
 
 
-def generate_tda_graph(machine, product, time):
-    dot = Digraph(comment="TDA Report")
-    dot.attr(rankdir="LR")
+def generate_tda_report(machine, product_name, specific_time):
+    dot = graphviz.Digraph(comment="Estado de la Cola de Ensamblaje")
+    dot.attr(rankdir="LR")  # Establecer dirección de izquierda a derecha
 
-    # Create a subgraph for the machine
-    with dot.subgraph(name="cluster_machine") as c:
-        c.attr(label=f"Machine: {machine.nombre}")
-        c.node(
-            "machine",
-            f"Name: {machine.nombre}\\nLines: {machine.num_lineas_produccion}\\nComponents: {machine.num_componentes}",
-        )
+    # Encontrar el producto en la máquina
+    product = next((p for p in machine.productos if p.nombre == product_name), None)
+    if not product:
+        print(f"Producto {product_name} no encontrado en la máquina {machine.nombre}")
+        return
 
-    # Create a subgraph for the product
-    with dot.subgraph(name="cluster_product") as c:
-        c.attr(label=f"Product: {product.nombre}")
-        c.node(
-            "product",
-            f"Name: {product.nombre}\\nSequence: {product.secuencia_ensamblaje}",
-        )
+    # Obtener los pasos de ensamblaje
+    assembly_steps = extract_assembly_steps(product.secuencia_ensamblaje)
 
-    # Simulate assembly up to the specified time
-    assembly_data = simulate_assembly(machine, product, time)
-
-    # Create nodes for each assembly line
-    for i in range(machine.num_lineas_produccion):
-        dot.node(f"line_{i}", f"Line {i+1}")
-
-    # Create nodes for each second and its actions
-    for second_node in assembly_data.secondsActions:
-        if second_node.second > time:
+    # Calcular qué pasos ya se han completado en el tiempo específico
+    completed_steps = 0
+    current_time = 0
+    for step in assembly_steps:
+        if current_time + 1 > specific_time:  # +1 por el movimiento del brazo
             break
+        current_time += 1  # Tiempo para mover el brazo
+        completed_steps += 1
+        if current_time + machine.tiempo_ensamblaje > specific_time:
+            break
+        current_time += machine.tiempo_ensamblaje  # Tiempo para ensamblar
 
-        second_id = f"second_{second_node.second}"
-        dot.node(second_id, f"Second {second_node.second}")
+    # Crear nodos para los pasos restantes
+    previous_node = None
+    for i in range(completed_steps, len(assembly_steps)):
+        step = assembly_steps[i]
+        node_name = f"L{step['line']}C{step['component']}"
+        dot.node(node_name, node_name)
+        if previous_node:
+            dot.edge(previous_node, node_name)
+        previous_node = node_name
 
-        if second_node.second > 1:
-            dot.edge(f"second_{second_node.second-1}", second_id)
-
-        for i, action in enumerate(second_node.actions):
-            action_id = f"action_{second_node.second}_{i}"
-            dot.node(action_id, action)
-            dot.edge(second_id, action_id)
-            dot.edge(action_id, f"line_{i}")
-
-    # Render the graph
+    # Generar el gráfico
     dot.render(
-        f"tda_report_{machine.nombre}_{product.nombre}_time_{time}",
+        f"tda_report_{machine.nombre}_{product_name}_time_{specific_time}",
+        view=True,
         format="png",
-        cleanup=True,
-    )
-    print(
-        f"TDA report graph generated: tda_report_{machine.nombre}_{product.nombre}_time_{time}.png"
     )
 
 
-# Usage example:
-# machine = ... # Your machine object
-# product = ... # Your product object
-# time = 10  # The time up to which you want to visualize the assembly process
-# generate_tda_graph(machine, product, time)
+# ! USO DE LISRASSS
+def extract_assembly_steps(secuencia_ensamblaje):
+    steps = []
+    i = 0
+    while i < len(secuencia_ensamblaje):
+        if secuencia_ensamblaje[i] == "L" and (i + 1) < len(secuencia_ensamblaje):
+            j = i + 1
+            while j < len(secuencia_ensamblaje) and secuencia_ensamblaje[j].isdigit():
+                j += 1
+            linea = int(secuencia_ensamblaje[i + 1 : j])
+            if j < len(secuencia_ensamblaje) and secuencia_ensamblaje[j] == "C":
+                k = j + 1
+                while (
+                    k < len(secuencia_ensamblaje) and secuencia_ensamblaje[k].isdigit()
+                ):
+                    k += 1
+                componente = int(secuencia_ensamblaje[j + 1 : k])
+                steps.append({"line": linea, "component": componente})
+                i = k
+            else:
+                i += 1
+        else:
+            i += 1
+    return steps
+
+
+# Ejemplo de uso:
+# machine = Machine("MaquinaA", 2, 5)
+# machine.agregar_producto("ProductoX", "L1C2 L2C3 L1C4 L2C1")
+# generate_tda_report(machine, "ProductoX", 3)  # Genera el reporte para el segundo 3

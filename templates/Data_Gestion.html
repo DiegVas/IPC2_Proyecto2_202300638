@@ -9,6 +9,11 @@
 <section id="Data_Gestion" class="tab-content active">
   <h1>Maquina Seleccionada: {{ Machine_Selected.nombre }}</h1>
   <h1>Producto Seleccionado: {{ Product_Selected.nombre }}</h1>
+  {% if Machine_Selected %}
+  <form action="">
+    <button type="submit" class="btn-sx">Generar archivo de salida de la maquina</button>
+  </form>
+  {% endif %}
 
   <h2>Cargar datos</h2>
   <!-- !  -->
@@ -43,7 +48,7 @@
         </select>
 
         <button type="submit" class="btn btn-orange">Simular Construcción</button>
-        {% else %} {% endif %}
+        {% endif %}
       </form>
     </div>
   </div>

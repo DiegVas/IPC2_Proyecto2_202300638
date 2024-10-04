@@ -112,6 +112,22 @@ input[type="file"],
   text-align: center;
 }
 
+.btn-sx {
+  padding: 15px;
+  background-color: #54b987;
+  font-size: 16px;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+}
+
+.btn-sx:hover {
+  background-color: #2f7243;
+}
+
 label.btn {
   display: inline-block;
   padding: 10px 0px;
@@ -150,8 +166,6 @@ footer a:hover {
     margin: 5px 0;
   }
 }
-
-/* ... (Estilos anteriores se mantienen) ... */
 
 .simulation-controls {
   margin-bottom: 20px;
@@ -202,5 +216,3 @@ footer a:hover {
     padding: 6px;
   }
 }
-
-/* ... (Estilos posteriores se mantienen) ... */

@@ -153,7 +153,9 @@ def simulate_assembly(machine, product):
         f"\nEl producto {product.nombre} se puede elaborar óptimamente en {total_time} segundos."
     )
     ProductLinked = ProductLinkedList()
-    ProductLinked.append(product.nombre, total_time, timeLinked)
+    ProductLinked.append(
+        product.nombre, total_time, timeLinked, machine.num_lineas_produccion
+    )
     return ProductLinked
 
 
