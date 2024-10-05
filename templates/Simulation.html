@@ -7,6 +7,27 @@
 <li><a href="{{ url_for('Reports') }}">Reportes</a></li>
 {% endblock %} {% block container %}
 <section id="simulation" class="tab-content active">
+  {% if Machine_Selected %}
+  <h2>Generacion de reportes</h2>
+  <div class="generate-control">
+    <form action="/generate">
+      <button type="submit" class="btn-sx">archivo de salida de la maquina</button>
+    </form>
+    {% with response = get_flashed_messages() %} {% if response %}
+    <h3>Grafica generada correctamente</h3>
+    {% endif %} {% endwith %}
+  </div>
+  <h2>Generacion Grafica TDA</h2>
+  <form method="POST" action="/generate_tda">
+    <label class="graph-c" for="time">Ingresa el tiempo:</label><br />
+    <input class="graph-c" type="number" id="time" name="time" placeholder="Tiempo en segundos" required /><br /><br />
+    <button class="graph-c" type="submit">Generar Gráfica</button>
+  </form>
+  {% if dataGraph %}
+  <div class="graph">
+    <img src="../static//tda_graph.png" alt="Grafica" />
+  </div>
+  {% endif %}
   <h2>Simulación de Ensamblaje</h2>
   <div class="table-container">
     <table>
@@ -16,7 +37,6 @@
           {% for linesEnsamble in range(Machine_Selected.num_lineas_produccion) %}
           <th>Línea de ensamblaje {{ linesEnsamble + 1 }}</th>
           {% endfor %}
-
         </tr>
       </thead>
       <tbody>
@@ -32,8 +52,11 @@
       </tbody>
     </table>
     {% for action in actionsAssembly %}
-    <p class="caption">El producto {{ action.name }} se puede elaborar óptimamente en {{ action.total_time }} segundos.</p>
+    <p class="caption">
+      El producto {{ action.name }} se puede elaborar óptimamente en {{ action.total_time }} segundos.
+    </p>
     {% endfor %}
   </div>
+  {% endif %}
 </section>
 {% endblock %}

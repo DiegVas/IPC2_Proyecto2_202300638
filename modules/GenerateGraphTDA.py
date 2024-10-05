@@ -1,76 +1,184 @@
 import graphviz
+from classes.LinkedLists import (
+    LinkedList,
+    ActionLinkedList,
+    TimeLinkedList,
+    ProductLinkedList,
+    StepLinkedList,
+)
+from modules.ProcessFile import extract_assembly_steps
+import os
 
 
-def generate_tda_report(machine, product_name, specific_time):
-    dot = graphviz.Digraph(comment="Estado de la Cola de Ensamblaje")
-    dot.attr(rankdir="LR")  # Establecer dirección de izquierda a derecha
+def generate_tda_report(machine, product, timeSpecific):
 
-    # Encontrar el producto en la máquina
-    product = next((p for p in machine.productos if p.nombre == product_name), None)
-    if not product:
-        print(f"Producto {product_name} no encontrado en la máquina {machine.nombre}")
-        return
-
-    # Obtener los pasos de ensamblaje
+    # ? Extraer los pasos de ensamblaje
     assembly_steps = extract_assembly_steps(product.secuencia_ensamblaje)
 
-    # Calcular qué pasos ya se han completado en el tiempo específico
-    completed_steps = 0
-    current_time = 0
-    for step in assembly_steps:
-        if current_time + 1 > specific_time:  # +1 por el movimiento del brazo
-            break
-        current_time += 1  # Tiempo para mover el brazo
-        completed_steps += 1
-        if current_time + machine.tiempo_ensamblaje > specific_time:
-            break
-        current_time += machine.tiempo_ensamblaje  # Tiempo para ensamblar
+    # * LinkedLists
+    # ? Inicializar las posiciones actuales de los brazos
+    current_positions = LinkedList()
+    timeLinked = TimeLinkedList()
 
-    # Crear nodos para los pasos restantes
-    previous_node = None
-    for i in range(completed_steps, len(assembly_steps)):
-        step = assembly_steps[i]
-        node_name = f"L{step['line']}C{step['component']}"
-        dot.node(node_name, node_name)
-        if previous_node:
-            dot.edge(previous_node, node_name)
-        previous_node = node_name
+    # * Variable de ensamblaje
+    total_time = 0
+    next_assembly_index = 0
 
-    # Generar el gráfico
-    dot.render(
-        f"tda_report_{machine.nombre}_{product_name}_time_{specific_time}",
-        view=True,
-        format="png",
+    # ! Cambio de estrucutras de datos
+    assembly_in_progress = LinkedList()
+    assembly_time_left = LinkedList()
+
+    # * Todas las lineas empiezan en el componente -1
+    for _ in range(machine.num_lineas_produccion):
+        current_positions.append(-1)
+        assembly_in_progress.append(False)
+        assembly_time_left.append(machine.tiempo_ensamblaje)
+
+    def RecopileAction(time, actions):
+        actionLinked = ActionLinkedList()
+
+        for action in actions:
+            actionLinked.append(action)
+
+        timeLinked.append(time, actionLinked)
+
+    while next_assembly_index < assembly_steps.length() and total_time < timeSpecific:
+
+        actions = LinkedList()
+        total_time += 1
+
+        for _ in range(machine.num_lineas_produccion):
+            actions.append("No hacer nada")
+
+        next_step = assembly_steps.get(next_assembly_index)  # ? Obtener el nodo
+        next_line = next_step.line - 1  # ? Acceder al atributo 'line'
+        next_component = next_step.component - 1  # ? Acceder al atributo 'component'
+
+        for line in range(machine.num_lineas_produccion):
+
+            # ? Obtener la posición actual del brazo
+            current_position = current_positions.get(line)
+
+            if line == next_line:
+
+                # * Si la posición actual no es la misma que la del siguiente componente
+                if current_position != next_component:
+
+                    # ? Mover brazo a la derecha o izquierda
+                    direction = "→" if next_component > current_position else "←"
+
+                    current_positions.set(
+                        line,
+                        (
+                            current_position + 1
+                            if direction == "→"
+                            else current_position - 1
+                        ),
+                    )
+
+                    # ? Agregar la acción a la lista
+                    actions.set(
+                        line,
+                        f"Mover brazo {direction} C{current_positions.get(line) + 1}",
+                    )
+
+                # * Si la posición actual es la misma que la del siguiente componente
+                elif current_position == next_component:
+
+                    # ? Si no hay ensamblaje en progreso
+                    if not assembly_in_progress.get(line):
+                        assembly_in_progress.set(line, True)
+                        assembly_time_left.set(line, machine.tiempo_ensamblaje)
+                        actions.set(line, f"Ensamblar C{next_component + 1}")
+                        assembly_time_left.set(line, assembly_time_left.get(line) - 1)
+
+                    # ? Si hay ensamblaje en progreso
+                    else:
+                        actions.set(line, f"Ensamblando C{next_component + 1}")
+                        assembly_time_left.set(line, assembly_time_left.get(line) - 1)
+
+                    # ? Si el ensamblaje ha terminado
+                    if assembly_time_left.get(line) == 0:
+                        assembly_in_progress.set(line, False)
+                        if total_time < timeSpecific:
+                            next_assembly_index += 1
+
+            else:
+
+                # ? Buscar el próximo paso para esta línea
+                next_step_for_line = next(
+                    (
+                        s
+                        # ? Obtener el siguiente paso para la línea actual
+                        for s in (
+                            assembly_steps.get(i)
+                            for i in range(next_assembly_index, assembly_steps.length())
+                        )
+                        if s.line - 1 == line
+                    ),
+                    None,
+                )
+
+                # ? Si hay un próximo paso para esta línea
+                if next_step_for_line:
+                    target_component = next_step_for_line.component - 1
+                    if current_position != target_component:
+                        direction = "→" if target_component > current_position else "←"
+                        current_positions.set(
+                            line,
+                            (
+                                current_position + 1
+                                if direction == "→"
+                                else current_position - 1
+                            ),
+                        )
+                        actions.set(
+                            line,
+                            f"Mover brazo {direction} C{current_positions.get(line) + 1}",
+                        )
+
+        # * Agregar la acción a la lista
+        RecopileAction(total_time, actions)
+
+    next_steps = get_next_steps(assembly_steps, next_assembly_index)
+
+    generate_tda_graph(machine, product, timeSpecific, next_steps)
+
+    return next_steps
+
+
+def get_next_steps(stepsLink, next_assembly_index):
+    next_steps = StepLinkedList()
+    for i in range(next_assembly_index, stepsLink.length()):
+        next_steps.append(i, stepsLink.get(i))
+    return next_steps
+
+
+def generate_tda_graph(machine, product, specific_time, next_steps):
+
+    dot = graphviz.Digraph(
+        comment=f"Estado de la Cola de Ensamblaje en tiempo {specific_time}"
     )
 
+    dot.attr(rankdir="LR")
 
-# ! USO DE LISRASSS
-def extract_assembly_steps(secuencia_ensamblaje):
-    steps = []
-    i = 0
-    while i < len(secuencia_ensamblaje):
-        if secuencia_ensamblaje[i] == "L" and (i + 1) < len(secuencia_ensamblaje):
-            j = i + 1
-            while j < len(secuencia_ensamblaje) and secuencia_ensamblaje[j].isdigit():
-                j += 1
-            linea = int(secuencia_ensamblaje[i + 1 : j])
-            if j < len(secuencia_ensamblaje) and secuencia_ensamblaje[j] == "C":
-                k = j + 1
-                while (
-                    k < len(secuencia_ensamblaje) and secuencia_ensamblaje[k].isdigit()
-                ):
-                    k += 1
-                componente = int(secuencia_ensamblaje[j + 1 : k])
-                steps.append({"line": linea, "component": componente})
-                i = k
-            else:
-                i += 1
-        else:
-            i += 1
-    return steps
+    current = next_steps.head
+    current_previeus = None
 
+    while current:
 
-# Ejemplo de uso:
-# machine = Machine("MaquinaA", 2, 5)
-# machine.agregar_producto("ProductoX", "L1C2 L2C3 L1C4 L2C1")
-# generate_tda_report(machine, "ProductoX", 3)  # Genera el reporte para el segundo 3
+        dot.node(
+            str(current.line),
+            f"L{current.component.line}C{current.component.component}",
+        )
+        if current_previeus:
+            dot.edge(str(current_previeus.line), str(current.line))
+        current_previeus = current
+        current = current.next
+
+    outputPath = "static/tda_graph"
+    # Generate the graph
+    dot.render(
+        outputPath,
+        format="png",
+    )

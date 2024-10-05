@@ -6,6 +6,7 @@
     <title>Simulador de Ensamblaje</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/Main.css')}}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/Table.css')}}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/graph.css')}}" />
   </head>
   <body>
     <div class="container">
@@ -21,8 +22,8 @@
       <main>{% block container%}{% endblock %}</main>
 
       <footer>
-        <a href="#about">Acerca de la Aplicación</a> |
-        <a href="#docs">Documentación</a>
+        <a href="{{ url_for('help') }}">Acerca de la Aplicación</a> |
+        <a href="https://github.com/DiegVas/IPC2_Proyecto2_202300638">Documentación</a>
       </footer>
     </div>
   </body>

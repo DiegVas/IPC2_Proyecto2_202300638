@@ -2,8 +2,8 @@
 <ListaMaquinas>
     <Maquina>
         <NombreMaquina> TelevisoresPro </NombreMaquina>
-        <CantidadLineasProduccion> 3 </CantidadLineasProduccion>
-        <CantidadComponentes>13 </CantidadComponentes>
+        <CantidadLineasProduccion> 2 </CantidadLineasProduccion>
+        <CantidadComponentes>2 </CantidadComponentes>
         <TiempoEnsamblaje> 2 </TiempoEnsamblaje>
         <ListadoProductos>
             <Producto>

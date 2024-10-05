@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Descripción de la Aplicación</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f7f7f7;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .content {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 60%;
+        line-height: 1.6;
+      }
+      h2 {
+        text-align: center;
+        color: #333;
+      }
+      .student-info {
+        margin-bottom: 20px;
+      }
+      .student-info p {
+        margin: 5px 0;
+      }
+      .description {
+        font-size: 14px;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <a href="{{ url_for('index') }}">Inicio</a>
+      <h2>Información del Estudiante</h2>
+
+      <div class="student-info">
+        <p><strong>Nombre:</strong>Diego Alejandro Vásquez Alonzo</p>
+        <p><strong>Carné:</strong> 202300638</p>
+      </div>
+
+      <h3>Descripción de la Aplicación</h3>
+      <p class="description">
+        La aplicación está diseñada para ayudar a empresas que manejan procesos de ensamblaje, permitiendo simular de
+        manera detallada y precisa la fabricación de productos complejos. El software emplea una estructura de varias
+        líneas de producción, donde cada línea tiene acceso a una cantidad determinada de componentes.
+      </p>
+
+      <p class="description">
+        Cada línea está equipada con un brazo robótico que se encarga de seleccionar los componentes correctos y
+        ensamblarlos en el orden necesario para formar el producto. La aplicación permite configurar múltiples productos
+        y simular el tiempo óptimo para su ensamblaje, mostrando paso a paso los movimientos de los brazos robóticos.
+      </p>
+
+      <p class="description">
+        Uno de los objetivos principales de la aplicación es optimizar el proceso de producción, minimizando el tiempo
+        que los brazos robóticos tardan en moverse entre componentes y ensamblarlos. Además, genera reportes detallados
+        que muestran el tiempo total requerido y las acciones realizadas en cada segundo del proceso, facilitando la
+        toma de decisiones para mejorar la eficiencia en la producción.
+      </p>
+
+      <p class="description">
+        El software también permite la carga de configuraciones personalizadas de productos y líneas de ensamblaje
+        mediante archivos XML, proporcionando flexibilidad en la simulación de diferentes escenarios de producción. Esta
+        herramienta es ideal para industrias que buscan maximizar la productividad en fábricas automatizadas.
+      </p>
+    </div>
+  </body>
+</html>

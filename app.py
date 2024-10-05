@@ -1,24 +1,27 @@
-import xml.etree.ElementTree as ET
 from classes.CircularList import CircularLinkedList
 from classes.LinkedLists import ProductLinkedList
 from modules.ProcessFile import ProcessFile, simulate_assembly
 from modules.ExportFile import generate_output_xml
 from modules.GenerateGraphTDA import generate_tda_report
-
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, flash
 
 app = Flask(__name__)
 
 # settings
 app.secret_key = "mysecretkey"
 
+# * Variables globales
+
+# ? Variables para gestion de datos
 CircularLinkedList = CircularLinkedList()
 ReportLinkedList = ProductLinkedList()
 Machine_Selected = None
 Product_Selected = None
 
+# ? Variables para simulacion
 actionsAssembly = None
 timeProduct = None
+dataGraph = None
 
 
 # routes frontend
@@ -26,6 +29,7 @@ timeProduct = None
 def index():
     global CircularLinkedList
     data = CircularLinkedList
+
     return render_template(
         "Data_Gestion.html",
         data=data,
@@ -44,6 +48,7 @@ def Simulation():
         Product_Selected=Product_Selected,
         actionsAssembly=actionsAssembly,
         ReportLinkedList=ReportLinkedList,
+        dataGraph=dataGraph,
     )
 
 
@@ -59,6 +64,7 @@ def new_data():
     data = CircularLinkedList
 
     ProcessFile(request.files["file"], CircularLinkedList)
+    generate_output_xml(CircularLinkedList)
 
     return redirect(url_for("index", data=data))
 
@@ -73,7 +79,6 @@ def update_Machine_Select():
             global Machine_Selected
             Machine_Selected = Machine
             break
-    generate_output_xml(CircularLinkedList)
 
     return redirect(url_for("index", Machine_Selected=Machine_Selected))
 
@@ -107,7 +112,8 @@ def update_Product_Select():
             for actionTime in time.actions:
                 print(actionTime)
 
-    generate_tda_report(Machine_Selected, Product_Selected.nombre, 10)
+    generate_tda_report(Machine_Selected, Product_Selected, 45)
+
     return redirect(
         url_for(
             "index",
@@ -118,13 +124,29 @@ def update_Product_Select():
     )
 
 
-@app.route("/generate", methods=["POST"])
+@app.route("/generate")
 def generate():
     global CircularLinkedList
-    global Machine_Selected
     generate_output_xml(CircularLinkedList)
+    flash("Reporte generado exitosamente")
+    return redirect(url_for("Simulation"))
 
-    return redirect(url_for("index", Machine_Selected=Machine_Selected))
+
+@app.route("/generate_tda", methods=["POST"])
+def generate_tda():
+    global Machine_Selected
+    global Product_Selected
+    global dataGraph
+    time = request.form["time"]
+    dataGraph = "dataGraph"
+    generate_tda_report(Machine_Selected, Product_Selected, int(time))
+
+    return redirect(url_for("Simulation", dataGraph=dataGraph))
+
+
+@app.route("/help")
+def help():
+    return render_template("Data.html")
 
 
 if __name__ == "__main__":
