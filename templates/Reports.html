@@ -7,9 +7,14 @@
 <li><a href="{{ url_for('Reports') }}" class="active">Reportes</a></li>
 {% endblock %} {% block container %}
 <section id="Reports" class="tab-content active">
-  <h2>Reportes</h2>
-  {% for table in ReportLinkedList %}
+  <h2>Reporte de TDA generados</h2>
+  {% if tda %} {% for t in tda %}
+  <h2>{{ t }}</h2>
+  <img src="../{{ t }}.png" alt="Grafica" />
+  {% endfor %} {% endif %}
 
+  <h2>Reportes de proudctos ensamblados</h2>
+  {% for table in ReportLinkedList %}
   <h2>{{table.name}} || {{table.total_time}} segundos</h2>
   <table>
     <thead>
@@ -18,8 +23,8 @@
         {% for linesEnsamble in range(table.lineas_produccion) %}
         <th>Línea de ensamblaje {{ linesEnsamble + 1 }}</th>
         {% endfor %}
-
       </tr>
+    </thead>
     {% for time in table.secondsActions %}
     <tr>
       <td>{{time.second}}</td>

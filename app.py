@@ -1,9 +1,10 @@
 from classes.CircularList import CircularLinkedList
-from classes.LinkedLists import ProductLinkedList
+from classes.LinkedLists import ProductLinkedList, LinkedList
 from modules.ProcessFile import ProcessFile, simulate_assembly
 from modules.ExportFile import generate_output_xml
 from modules.GenerateGraphTDA import generate_tda_report
 from flask import Flask, render_template, url_for, request, redirect, flash
+
 
 app = Flask(__name__)
 
@@ -22,6 +23,8 @@ Product_Selected = None
 actionsAssembly = None
 timeProduct = None
 dataGraph = None
+
+generatesTDAS = LinkedList()
 
 
 # routes frontend
@@ -54,7 +57,9 @@ def Simulation():
 
 @app.route("/Reports")
 def Reports():
-    return render_template("Reports.html", ReportLinkedList=ReportLinkedList)
+    return render_template(
+        "Reports.html", ReportLinkedList=ReportLinkedList, tda=generatesTDAS
+    )
 
 
 # routes backend
@@ -112,8 +117,6 @@ def update_Product_Select():
             for actionTime in time.actions:
                 print(actionTime)
 
-    generate_tda_report(Machine_Selected, Product_Selected, 45)
-
     return redirect(
         url_for(
             "index",
@@ -137,9 +140,10 @@ def generate_tda():
     global Machine_Selected
     global Product_Selected
     global dataGraph
+    global generatesTDAS
     time = request.form["time"]
     dataGraph = "dataGraph"
-    generate_tda_report(Machine_Selected, Product_Selected, int(time))
+    generate_tda_report(Machine_Selected, Product_Selected, int(time), generatesTDAS)
 
     return redirect(url_for("Simulation", dataGraph=dataGraph))
 

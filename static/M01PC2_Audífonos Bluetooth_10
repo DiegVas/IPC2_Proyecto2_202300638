@@ -1,0 +1,9 @@
+// Estado de la Cola de Ensamblaje en tiempo 10
+digraph {
+	rankdir=LR
+	3 [label=L1C4]
+	4 [label=L2C7]
+	3 -> 4
+	5 [label=L3C8]
+	4 -> 5
+}

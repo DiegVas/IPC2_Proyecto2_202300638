@@ -10,7 +10,7 @@ from modules.ProcessFile import extract_assembly_steps
 import os
 
 
-def generate_tda_report(machine, product, timeSpecific):
+def generate_tda_report(machine, product, timeSpecific, LinkedLists):
 
     # ? Extraer los pasos de ensamblaje
     assembly_steps = extract_assembly_steps(product.secuencia_ensamblaje)
@@ -142,7 +142,7 @@ def generate_tda_report(machine, product, timeSpecific):
 
     next_steps = get_next_steps(assembly_steps, next_assembly_index)
 
-    generate_tda_graph(machine, product, timeSpecific, next_steps)
+    generate_tda_graph(machine, product, timeSpecific, next_steps, link=LinkedLists)
 
     return next_steps
 
@@ -154,7 +154,7 @@ def get_next_steps(stepsLink, next_assembly_index):
     return next_steps
 
 
-def generate_tda_graph(machine, product, specific_time, next_steps):
+def generate_tda_graph(machine, product, specific_time, next_steps, link):
 
     dot = graphviz.Digraph(
         comment=f"Estado de la Cola de Ensamblaje en tiempo {specific_time}"
@@ -176,9 +176,11 @@ def generate_tda_graph(machine, product, specific_time, next_steps):
         current_previeus = current
         current = current.next
 
-    outputPath = "static/tda_graph"
+    outputPath = f"static/{machine.nombre}_{product.nombre}_{specific_time}"
+    link.append(outputPath)
     # Generate the graph
     dot.render(
         outputPath,
         format="png",
     )
+    dot.render("static/tda_graph", format="png")

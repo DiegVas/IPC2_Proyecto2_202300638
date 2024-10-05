@@ -30,10 +30,12 @@ def generate_output_xml(machines):
                     time_elem = ET.SubElement(elaboration_elem, "Tiempo")
                     time_elem.set("NoSegundo", str(time_node.second))
 
-                    for i, action in enumerate(time_node.actions):
+                    i = 1
+                    for action in time_node.actions:
                         line_elem = ET.SubElement(time_elem, "LineaEnsamblaje")
-                        line_elem.set("NoLinea", str(i + 1))
+                        line_elem.set("NoLinea", str(i))
                         line_elem.text = action
+                        i += 1
 
     # Convert to string and pretty print
     rough_string = ET.tostring(root, "utf-8")
